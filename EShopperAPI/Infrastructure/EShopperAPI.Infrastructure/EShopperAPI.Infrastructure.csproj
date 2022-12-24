@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\EShopperAPI.Application\EShopperAPI.Application.csproj" />
+  </ItemGroup>
+
 </Project>
