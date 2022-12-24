@@ -7,5 +7,6 @@ namespace EShopperAPI.API.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+
     }
 }
