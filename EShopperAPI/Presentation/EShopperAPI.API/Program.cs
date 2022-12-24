@@ -2,7 +2,6 @@ using EShopperAPI.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddPersistenceServices(); //Service Registrations
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
