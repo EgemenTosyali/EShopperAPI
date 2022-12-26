@@ -46,13 +46,11 @@ namespace EShopperAPI.Persistence.Repositories
         }
 
         public async Task<T> GetByIdAsync(string id, bool tracking = true)
-        //=> Table.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
-        //=> await Table.FindAsync(Guid.Parse(id));
         {
             var query = Table.AsQueryable();
             if (!tracking)
                 query = Table.AsNoTracking();
-            return await query.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
+            return await query.FirstOrDefaultAsync(marker => marker.Id == Guid.Parse(id));
         }
     }
 }

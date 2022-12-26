@@ -1,5 +1,4 @@
-﻿using EShopperAPI.Domain.Entities.Common;
-using Microsoft.EntityFrameworkCore;
+﻿using EShopperAPI.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace EShopperAPI.Application.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IOrderReadRepository : IReadRepository<Order>
     {
-        DbSet<T> Table { get; }
     }
 }
