@@ -19,7 +19,7 @@ namespace EShopperAPI.Persistence.Contexts
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         
-        // Interceptor creates datas auto before saving
+        // Interceptor: pre create data before saving
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var datas = ChangeTracker.Entries<BaseEntity>();
