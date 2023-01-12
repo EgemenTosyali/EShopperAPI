@@ -5,6 +5,8 @@ using System.Net;
 
 namespace EShopperAPI.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : Controller
     {
         readonly private IProductWriteRepository _productWriteRepository;
