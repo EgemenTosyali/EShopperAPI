@@ -1,4 +1,7 @@
+using EShopperAPI.Application.Validators;
+using EShopperAPI.Infrastructure.Filters;
 using EShopperAPI.Persistence;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +12,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(
         .AllowAnyHeader().AllowAnyMethod();
     }));
 builder.Services.AddPersistenceServices(); //Service Registrations
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -29,5 +29,15 @@ namespace EShopperAPI.API.Controllers
             await _productWriteRepository.SaveAsync();
             return StatusCode((int)HttpStatusCode.Created);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            return Ok(await _productReadRepository.GetByIdAsync(id, false));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(_productReadRepository.GetAll(false));
+        }
     }
 }
