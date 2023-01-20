@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options => options.AddDefaultPolicy(
     policy =>
     {
-        policy.WithOrigins("https://localhost:7027", "http://localhost:4200")
+        policy.WithOrigins("https://localhost:7027", "http://localhost:4200", "http://localhost:5000")
         .AllowAnyHeader().AllowAnyMethod();
     }));
 builder.Services.AddPersistenceServices(); //Service Registrations
@@ -23,7 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors();
 
 app.UseHttpsRedirection();
