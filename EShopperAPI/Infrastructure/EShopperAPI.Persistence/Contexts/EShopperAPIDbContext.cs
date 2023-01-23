@@ -29,7 +29,8 @@ namespace EShopperAPI.Persistence.Contexts
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.createDate = DateTime.UtcNow,
-                    EntityState.Modified => data.Entity.createDate = DateTime.UtcNow
+                    EntityState.Modified => data.Entity.updateDate = DateTime.UtcNow,
+                    _ => DateTime.UtcNow
                 };
             }
 
