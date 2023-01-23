@@ -1,7 +1,9 @@
 ﻿using EShopperAPI.Application.Repositories;
 using EShopperAPI.Persistence.Contexts;
 using EShopperAPI.Persistence.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace EShopperAPI.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection service)
         {
-            service.AddDbContext<EShopperAPIDbContext>(option => option.UseNpgsql(Configuration.ConnectionString));
+            service.AddDbContext<EShopperAPIDbContext>(option => option.UseNpgsql(Configuration.ConnectionString()));
             service.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             service.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             service.AddScoped<IOrderReadRepository, OrderReadRepository>();

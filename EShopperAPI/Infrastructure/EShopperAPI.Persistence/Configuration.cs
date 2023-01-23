@@ -10,22 +10,19 @@ namespace EShopperAPI.Persistence
 {
     static class Configuration
     {
-        static public string ConnectionString
+
+        public static string ConnectionString()
         {
-            get
+            ConfigurationManager configurationManager = new();
+            configurationManager.AddJsonFile("appsettings.json");
+
+
+            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
             {
-                ConfigurationManager configurationManager = new();
-                //configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/EShopperAPI.API"));
-                configurationManager.AddJsonFile("appsettings.json");
-
-                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-                    return configurationManager.GetConnectionString("PostgreSQL-Development");
-
-                else if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
-                    return configurationManager.GetConnectionString("PostgreSQL-Production");
-
-                return "";
-            }
+                "Development" => configurationManager.GetConnectionString("PostgreSQL-Development"),
+                "Staging" => configurationManager.GetConnectionString("PostgreSQL-Staging"),
+                "Production" => configurationManager.GetConnectionString("PostgreSQL-Production")
+            };
         }
     }
 }

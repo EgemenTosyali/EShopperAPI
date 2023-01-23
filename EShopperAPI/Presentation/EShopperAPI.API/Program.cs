@@ -1,34 +1,49 @@
 using EShopperAPI.Application.Validators;
 using EShopperAPI.Infrastructure.Filters;
 using EShopperAPI.Persistence;
+using EShopperAPI.Persistence.Contexts;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddCors(options => options.AddDefaultPolicy(
-    policy =>
-    {
-        policy.WithOrigins("https://localhost:7027", "http://localhost:4200", "http://localhost:5000")
-        .AllowAnyHeader().AllowAnyMethod();
-    }));
-builder.Services.AddPersistenceServices(); //Service Registrations
-builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+internal class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddCors(options => options.AddDefaultPolicy(
+            policy =>
+            {
+                policy.WithOrigins("https://localhost:7027", "http://localhost:4200", "http://localhost:5000")
+                .AllowAnyHeader().AllowAnyMethod();
+            }));
+        builder.Services.AddPersistenceServices(); //Service Registrations
+        builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
+            db.Database.Migrate();
+        }
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseCors();
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
+    }
 }
-app.UseCors();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
