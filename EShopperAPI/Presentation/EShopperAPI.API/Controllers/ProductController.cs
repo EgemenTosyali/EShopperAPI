@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.Application.Repositories;
+using EShopperAPI.Application.RequestParameters;
 using EShopperAPI.Application.ViewModels.Products;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -35,9 +36,23 @@ namespace EShopperAPI.API.Controllers
             return Ok(await _productReadRepository.GetByIdAsync(id, false));
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] Pagination pagination)
         {
-            return Ok(_productReadRepository.GetAll(false));
+            var totalCount = _productReadRepository.GetAll(false).Count();
+            var products = _productReadRepository.GetAll(false).Select(p => new
+            {
+                p.Id,
+                p.Name,
+                p.Stock,
+                p.Price,
+                p.createDate,
+                p.updateDate
+            }).Skip(pagination.Page * pagination.Size).Take(pagination.Size);
+            return Ok(new
+            {
+                totalCount,
+                products
+            });
         }
     }
 }
