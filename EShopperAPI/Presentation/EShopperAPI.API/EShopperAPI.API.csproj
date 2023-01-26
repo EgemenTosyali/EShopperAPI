@@ -27,4 +27,8 @@
     <ProjectReference Include="..\..\Infrastructure\EShopperAPI.Infrastructure\EShopperAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EShopperAPI.Persistence\EShopperAPI.Persistence.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 </Project>
