@@ -10,6 +10,6 @@ namespace EShopperAPI.Domain.Entities.Common
     {
         public Guid Id { get; set; }
         public DateTime createDate { get; set; }
-        public DateTime updateDate { get; set; }
+        virtual public DateTime updateDate { get; set; }
     }
 }
