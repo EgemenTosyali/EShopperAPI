@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EShopperAPI.Infrastructure.Services.Storage.Local
 {
-    public class LocalStorage : ILocalStorage
+    public class LocalStorage : Storage, ILocalStorage
     {
         readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -40,9 +40,9 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Local
             List<bool> results = new();
             foreach (IFormFile file in files)
             {
-                //string fileNewName = await FileRenameAsync(file.FileName);
-                await CopyFileAsync($"{uploadPath}\\{file.Name}", file);
-                datas.Add((file.Name, $"{path}\\{file.Name}"));
+                string fileNewName = await FileRenameAsync(file.FileName);
+                await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
+                datas.Add((file.Name, $"{path}\\{fileNewName}"));
             }
 
 

@@ -1,6 +1,7 @@
 ﻿using EShopperAPI.Application.Abstractions.Storage;
 using EShopperAPI.Infrastructure.Enums;
 using EShopperAPI.Infrastructure.Services.Storage;
+using EShopperAPI.Infrastructure.Services.Storage.Azure;
 using EShopperAPI.Infrastructure.Services.Storage.Local;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,7 +19,7 @@ namespace EShopperAPI.Infrastructure
             serviceCollection.AddScoped<IStorageService, StorageService>();
         }
 
-        public static void AddStorage<T>(this IServiceCollection serviceCollection) where T : class, IStorage
+        public static void AddStorage<T>(this IServiceCollection serviceCollection) where T : Storage, IStorage
         {
             serviceCollection.AddScoped<IStorage, T>();
         }
@@ -31,6 +32,7 @@ namespace EShopperAPI.Infrastructure
                     break;
 
                 case StorageTypes.Azure:
+                    serviceCollection.AddScoped<IStorage, AzureStorage>();
                     break;
 
                 default:
