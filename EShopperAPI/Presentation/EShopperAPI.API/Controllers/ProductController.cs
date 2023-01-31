@@ -1,6 +1,9 @@
-﻿using EShopperAPI.Application.Repositories;
+﻿using EShopperAPI.Application.Abstractions.Storage;
+using EShopperAPI.Application.Repositories;
 using EShopperAPI.Application.RequestParameters;
 using EShopperAPI.Application.ViewModels.Products;
+using EShopperAPI.Domain.Entities;
+using EShopperAPI.Persistence.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -12,15 +15,30 @@ namespace EShopperAPI.API.Controllers
     public class ProductController : Controller
     {
         readonly private IProductWriteRepository _productWriteRepository;
-        readonly private IProductReadRepository _productReadRepository;
         readonly private IWebHostEnvironment _webHostEnvironment;
+        readonly private IProductReadRepository _productReadRepository;
+        readonly private IFileWriteRepository _fileWriteRepository;
+        readonly private IFileReadRepository _fileReadRepository;
+        readonly private IProductImageFileReadRepository _productImageFileReadRepository;
+        readonly private IProductImageFileWriteRepository _productImageFileWriteRepository;
+        readonly private IInvoiceFileReadRepository _invoiceFileReadRepository;
+        readonly private IInvoiceFileWriteRepository _invoiceFileWriteRepository;
+        readonly private IStorageService _storageService;
 
-        public ProductController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductWriteRepository productWriteRepository, IWebHostEnvironment webHostEnvironment, IProductReadRepository productReadRepository, IFileWriteRepository fileWriteRepository, IFileReadRepository fileReadRepository, IProductImageFileReadRepository productImageFileReadRepository, IProductImageFileWriteRepository productImageFileWriteRepository, IInvoiceFileReadRepository invoiceFileReadRepository, IInvoiceFileWriteRepository invoiceFileWriteRepository, IStorageService storageService)
         {
             _productWriteRepository = productWriteRepository;
-            _productReadRepository = productReadRepository;
             _webHostEnvironment = webHostEnvironment;
+            _productReadRepository = productReadRepository;
+            _fileWriteRepository = fileWriteRepository;
+            _fileReadRepository = fileReadRepository;
+            _productImageFileReadRepository = productImageFileReadRepository;
+            _productImageFileWriteRepository = productImageFileWriteRepository;
+            _invoiceFileReadRepository = invoiceFileReadRepository;
+            _invoiceFileWriteRepository = invoiceFileWriteRepository;
+            _storageService = storageService;
         }
+
         [HttpPost]
         public async Task<IActionResult> Post(CreateProduct_ViewModel model)
         {
@@ -67,20 +85,15 @@ namespace EShopperAPI.API.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Upload()
         {
-            string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "resource/product-images");
-            if (!Directory.Exists(uploadPath))
-                Directory.CreateDirectory(uploadPath);
-
-            Guid randomId;
-            foreach (IFormFile file in Request.Form.Files)
+            var datas = await _storageService.UploadAsync("resource/files", Request.Form.Files);
+            await _productImageFileWriteRepository.AddRangeAsync(datas.Select(d => new ProductImageFile()
             {
-                randomId = Guid.NewGuid();
-                string fullPath = Path.Combine(uploadPath, $"{randomId.ToString()}{Path.GetExtension(file.FileName)}");
+                FileName = d.fileName,
+                FilePath = d.pathOrContainerName,
+                Storage = _storageService.StorageName
+            }).ToList());
 
-                using FileStream fileStream = new(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
-                await file.CopyToAsync(fileStream);
-                await fileStream.FlushAsync();
-            }
+            await _productImageFileWriteRepository.SaveAsync();
             return Ok();
         }
     }

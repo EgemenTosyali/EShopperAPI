@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EShopperAPI.Application.Repositories
 {
-    public interface IInvoiceReadRepository : IReadRepository<InvoiceFile>
+    public interface IInvoiceFileWriteRepository : IWriteRepository<Domain.Entities.InvoiceFile>
     {
     }
 }

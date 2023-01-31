@@ -153,10 +153,6 @@ namespace EShopperAPI.Persistence.Migrations
                 {
                     b.HasBaseType("EShopperAPI.Domain.Entities.File");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 

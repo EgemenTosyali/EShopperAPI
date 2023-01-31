@@ -30,7 +30,7 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Local
         public bool HasFile(string path, string fileName)
              => File.Exists($"{path}\\{fileName}");
 
-        public async Task<List<(string fileName, string path)>> UploadAsync(string path, IFormFileCollection files)
+        public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string path, IFormFileCollection files)
         {
             string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, path);
             if (!Directory.Exists(uploadPath))
@@ -40,6 +40,7 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Local
             List<bool> results = new();
             foreach (IFormFile file in files)
             {
+                //string fileNewName = await FileRenameAsync(file.FileName);
                 await CopyFileAsync($"{uploadPath}\\{file.Name}", file);
                 datas.Add((file.Name, $"{path}\\{file.Name}"));
             }

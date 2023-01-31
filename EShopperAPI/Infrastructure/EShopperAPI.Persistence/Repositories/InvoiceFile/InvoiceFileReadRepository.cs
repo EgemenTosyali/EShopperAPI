@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EShopperAPI.Persistence.Repositories
 {
-    public class InvoiceFileReadRepository : ReadRepository<InvoiceFile>, IInvoiceReadRepository
+    public class InvoiceFileReadRepository : ReadRepository<InvoiceFile>, IInvoiceFileReadRepository
     {
         public InvoiceFileReadRepository(EShopperAPIDbContext context) : base(context)
         {

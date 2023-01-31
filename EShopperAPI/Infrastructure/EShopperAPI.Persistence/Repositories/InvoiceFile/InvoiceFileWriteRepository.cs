@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EShopperAPI.Persistence.Repositories
 {
-    public class InvoiceFileWriteRepository : WriteRepository<InvoiceFile>, IInvoiceWriteRepository
+    public class InvoiceFileWriteRepository : WriteRepository<InvoiceFile>, IInvoiceFileWriteRepository
     {
         public InvoiceFileWriteRepository(EShopperAPIDbContext context) : base(context)
         {

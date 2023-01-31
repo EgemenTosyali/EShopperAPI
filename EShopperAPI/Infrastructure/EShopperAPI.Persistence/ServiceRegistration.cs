@@ -25,6 +25,13 @@ namespace EShopperAPI.Persistence
             service.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
             service.AddScoped<IProductReadRepository, ProductReadRepository>();
             service.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+
+            service.AddScoped<IFileReadRepository, FileReadRepository>();
+            service.AddScoped<IFileWriteRepository, FileWriteRepository>();
+            service.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
+            service.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
+            service.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
+            service.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
         }
     }
 }

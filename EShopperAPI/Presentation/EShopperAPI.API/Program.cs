@@ -1,5 +1,7 @@
 using EShopperAPI.Application.Validators;
+using EShopperAPI.Infrastructure;
 using EShopperAPI.Infrastructure.Filters;
+using EShopperAPI.Infrastructure.Services.Storage.Local;
 using EShopperAPI.Persistence;
 using EShopperAPI.Persistence.Contexts;
 using FluentValidation.AspNetCore;
@@ -11,14 +13,19 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddPersistenceServices();
+        builder.Services.AddInfrastructureServices();
+
+        builder.Services.AddStorage<LocalStorage>();
+
         builder.Services.AddCors(options => options.AddDefaultPolicy(
             policy =>
             {
                 policy.WithOrigins("https://localhost:7027", "http://localhost:4200", "http://localhost:5000")
                 .AllowAnyHeader().AllowAnyMethod();
             }));
-        builder.Services.AddPersistenceServices(); //Service Registrations
         builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 

@@ -8,7 +8,6 @@ namespace EShopperAPI.Domain.Entities
 {
     public class InvoiceFile : File
     {
-        public string Description { get; set; }
         public double Price { get; set; }
     }
 }

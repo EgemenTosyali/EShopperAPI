@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EShopperAPI.Persistence.Migrations
 {
     [DbContext(typeof(EShopperAPIDbContext))]
-    [Migration("20221224185447_mig_1")]
+    [Migration("20230130143539_mig_1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -44,6 +44,40 @@ namespace EShopperAPI.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("EShopperAPI.Domain.Entities.File", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Storage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("createDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("File");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("EShopperAPI.Domain.Entities.Order", b =>
@@ -116,6 +150,23 @@ namespace EShopperAPI.Persistence.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("OrderProduct");
+                });
+
+            modelBuilder.Entity("EShopperAPI.Domain.Entities.InvoiceFile", b =>
+                {
+                    b.HasBaseType("EShopperAPI.Domain.Entities.File");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.HasDiscriminator().HasValue("InvoiceFile");
+                });
+
+            modelBuilder.Entity("EShopperAPI.Domain.Entities.ProductImageFile", b =>
+                {
+                    b.HasBaseType("EShopperAPI.Domain.Entities.File");
+
+                    b.HasDiscriminator().HasValue("ProductImageFile");
                 });
 
             modelBuilder.Entity("EShopperAPI.Domain.Entities.Order", b =>

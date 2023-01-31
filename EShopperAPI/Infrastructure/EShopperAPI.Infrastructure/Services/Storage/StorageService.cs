@@ -18,16 +18,16 @@ namespace EShopperAPI.Infrastructure.Services.Storage
         }
         public string StorageName { get => _storage.GetType().Name; }
 
-        public async Task DeleteAsync(string path, string fileName)
-            => await _storage.DeleteAsync(path, fileName);
+        public async Task DeleteAsync(string pathOrContainerName, string fileName)
+            => await _storage.DeleteAsync(pathOrContainerName, fileName);
 
-        public List<string> GetFiles(string path)
-            => _storage.GetFiles(path);
+        public List<string> GetFiles(string pathOrContainerName)
+            => _storage.GetFiles(pathOrContainerName);
 
-        public bool HasFile(string path, string fileName)
-            => _storage.HasFile(path, fileName);
+        public bool HasFile(string pathOrContainerName, string fileName)
+            => _storage.HasFile(pathOrContainerName, fileName);
 
-        public Task<List<(string fileName, string path)>> UploadAsync(string path, IFormFileCollection files)
-            => _storage.UploadAsync(path, files);
+        public Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string pathOrContainerName, IFormFileCollection files)
+            => _storage.UploadAsync(pathOrContainerName, files);
     }
 }
