@@ -2,6 +2,7 @@ using EShopperAPI.Application.Validators;
 using EShopperAPI.Infrastructure;
 using EShopperAPI.Infrastructure.Filters;
 using EShopperAPI.Infrastructure.Services.Storage.Azure;
+using EShopperAPI.Infrastructure.Services.Storage.Google_Cloud;
 using EShopperAPI.Infrastructure.Services.Storage.Local;
 using EShopperAPI.Persistence;
 using EShopperAPI.Persistence.Contexts;
@@ -17,8 +18,9 @@ internal class Program
         builder.Services.AddPersistenceServices();
         builder.Services.AddInfrastructureServices();
 
-        builder.Services.AddStorage<LocalStorage>();
+        //builder.Services.AddStorage<LocalStorage>();
         //builder.Services.AddStorage<AzureStorage>();
+        builder.Services.AddStorage<GoogleCloudStorage>();
 
         builder.Services.AddCors(options => options.AddDefaultPolicy(
             policy =>

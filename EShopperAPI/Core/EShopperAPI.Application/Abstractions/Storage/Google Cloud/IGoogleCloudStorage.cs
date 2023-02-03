@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EShopperAPI.Infrastructure.Enums
+namespace EShopperAPI.Application.Abstractions.Storage.Google_Cloud
 {
-    public enum StorageTypes
+    public interface IGoogleCloudStorage : IStorage
     {
-        Local,
-        Azure,
-        GoogleCloud
     }
 }

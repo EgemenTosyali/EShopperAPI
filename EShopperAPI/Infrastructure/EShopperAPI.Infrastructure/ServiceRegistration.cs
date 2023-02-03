@@ -23,22 +23,5 @@ namespace EShopperAPI.Infrastructure
         {
             serviceCollection.AddScoped<IStorage, T>();
         }
-        public static void AddStorage(this IServiceCollection serviceCollection, StorageTypes storageType)
-        {
-            switch (storageType)
-            {
-                case StorageTypes.Local:
-                    serviceCollection.AddScoped<IStorage, LocalStorage>();
-                    break;
-
-                case StorageTypes.Azure:
-                    serviceCollection.AddScoped<IStorage, AzureStorage>();
-                    break;
-
-                default:
-                    serviceCollection.AddScoped<IStorage, LocalStorage>();
-                    break;
-            }
-        }
     }
 }
