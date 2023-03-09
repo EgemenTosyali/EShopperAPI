@@ -18,14 +18,14 @@ internal class Program
         builder.Services.AddPersistenceServices();
         builder.Services.AddInfrastructureServices();
 
-        //builder.Services.AddStorage<LocalStorage>();
+        builder.Services.AddStorage<LocalStorage>();
         //builder.Services.AddStorage<AzureStorage>();
-        builder.Services.AddStorage<GoogleCloudStorage>();
+        //builder.Services.AddStorage<GoogleCloudStorage>();
 
         builder.Services.AddCors(options => options.AddDefaultPolicy(
             policy =>
             {
-                policy.WithOrigins("https://localhost:7027", "http://localhost:4200", "http://localhost:5000")
+                policy.WithOrigins("https://localhost:7777","http://localhost:7777")
                 .AllowAnyHeader().AllowAnyMethod();
             }));
         builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
@@ -35,11 +35,11 @@ internal class Program
 
         var app = builder.Build();
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
-            db.Database.Migrate();
-        }
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
+        //    db.Database.Migrate();
+        //}
 
         if (app.Environment.IsDevelopment())
         {

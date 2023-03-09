@@ -14,8 +14,7 @@ namespace EShopperAPI.Persistence
         public static string ConnectionString()
         {
             ConfigurationManager configurationManager = new();
-            configurationManager.AddJsonFile("appsettings.json");
-
+            configurationManager.AddUserSecrets("78dacb82-aaef-449b-9453-cc4d8f900294");
 
             return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
             {
