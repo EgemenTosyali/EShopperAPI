@@ -33,6 +33,7 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Local
         public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string path, IFormFileCollection files)
         {
             string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, path);
+            Console.WriteLine(uploadPath);
             if (!Directory.Exists(uploadPath))
                 Directory.CreateDirectory(uploadPath);
 

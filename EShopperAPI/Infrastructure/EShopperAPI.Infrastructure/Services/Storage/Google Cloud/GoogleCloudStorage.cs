@@ -61,7 +61,7 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Google_Cloud
                 string fileNewName = await FileRenameAsync(file.Name);
                 using var fileStream = file.OpenReadStream();
                 await _storageClient.UploadObjectAsync(_bucketName, path+fileNewName, null, fileStream);
-                datas.Add((file.Name, path));
+                datas.Add((fileNewName, $"{path}{fileNewName}"));
             }
             return datas;
         }
