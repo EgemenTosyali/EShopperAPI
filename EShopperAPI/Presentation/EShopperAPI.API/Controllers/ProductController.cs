@@ -6,7 +6,9 @@ using EShopperAPI.Domain.Entities;
 using EShopperAPI.Persistence.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Runtime.InteropServices;
 
 namespace EShopperAPI.API.Controllers
 {
@@ -98,6 +100,31 @@ namespace EShopperAPI.API.Controllers
                 Products = new List<Product>() { product }
             }).ToList());
 
+            await _productImageFileWriteRepository.SaveAsync();
+            return Ok();
+        }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetProductImages(string id)
+        {
+            Product? product = await _productReadRepository.Table.Include(p => p.ProductImageFiles)
+                .FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
+
+            return Ok(product.ProductImageFiles.Select(p => new
+            {
+                Path = $"{_configuration["StorageUrl:GoogleCloudUrl"]}/{p.FilePath}{_configuration["StorageUrl:GoogleCloudAuthuser"]}",
+                p.FileName,
+                p.FilePath,
+                p.Id
+            }));
+        }
+        [HttpDelete("[action]/{id}")]
+        public async Task<IActionResult> DeleteProductImage(string id, string imageId)
+        {
+            Product? product = await _productReadRepository.Table.Include(p => p.ProductImageFiles)
+                .FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
+
+            ProductImageFile productImageFile = product.ProductImageFiles.FirstOrDefault(p => p.Id == Guid.Parse(imageId));
+            product.ProductImageFiles.Remove(productImageFile);
             await _productImageFileWriteRepository.SaveAsync();
             return Ok();
         }
