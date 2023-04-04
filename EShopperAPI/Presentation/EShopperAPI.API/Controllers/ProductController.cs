@@ -111,7 +111,7 @@ namespace EShopperAPI.API.Controllers
 
             return Ok(product.ProductImageFiles.Select(p => new
             {
-                Path = $"{_configuration["StorageUrl:GoogleCloudUrl"]}/{p.FilePath}{_configuration["StorageUrl:GoogleCloudAuthuser"]}",
+                Path = $"{_configuration["StorageUrl:GoogleCloudUrl"]}/{p.FilePath}",
                 p.FileName,
                 p.FilePath,
                 p.Id
