@@ -1,3 +1,4 @@
+using EShopperAPI.Application;
 using EShopperAPI.Application.Validators;
 using EShopperAPI.Infrastructure;
 using EShopperAPI.Infrastructure.Filters;
@@ -17,6 +18,7 @@ internal class Program
 
         builder.Services.AddPersistenceServices();
         builder.Services.AddInfrastructureServices();
+        builder.Services.AddAplicationServices();
 
         //builder.Services.AddStorage<LocalStorage>();
         //builder.Services.AddStorage<AzureStorage>();
