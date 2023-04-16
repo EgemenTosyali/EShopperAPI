@@ -1,5 +1,7 @@
 ﻿using EShopperAPI.Domain.Entities;
 using EShopperAPI.Domain.Entities.Common;
+using EShopperAPI.Domain.Entities.Identities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using File = EShopperAPI.Domain.Entities.File;
 
 namespace EShopperAPI.Persistence.Contexts
 {
-    public class EShopperAPIDbContext : DbContext
+    public class EShopperAPIDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public EShopperAPIDbContext(DbContextOptions options) : base(options)
         {
