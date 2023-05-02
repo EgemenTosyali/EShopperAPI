@@ -1,14 +1,8 @@
 ﻿using EShopperAPI.Application.Abstractions.Storage;
-using EShopperAPI.Infrastructure.Enums;
+using EShopperAPI.Application.Abstractions.Token;
 using EShopperAPI.Infrastructure.Services.Storage;
-using EShopperAPI.Infrastructure.Services.Storage.Azure;
-using EShopperAPI.Infrastructure.Services.Storage.Local;
+using EShopperAPI.Infrastructure.Services.Token;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Infrastructure
 {
@@ -17,6 +11,7 @@ namespace EShopperAPI.Infrastructure
         public static void AddInfrastructureServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IStorageService, StorageService>();
+            serviceCollection.AddScoped<ITokenHandler, TokenHandler>();
         }
 
         public static void AddStorage<T>(this IServiceCollection serviceCollection) where T : Storage, IStorage
