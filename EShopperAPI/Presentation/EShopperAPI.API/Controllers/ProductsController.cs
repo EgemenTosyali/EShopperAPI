@@ -8,12 +8,14 @@ using EShopperAPI.Application.Features.Queries.Product.GetByIdProduct;
 using EShopperAPI.Application.Features.Queries.ProductImageFile.GetProductImageFile;
 using EShopperAPI.Application.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShopperAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class ProductsController : ControllerBase
     {
         readonly private IMediator mediator;
