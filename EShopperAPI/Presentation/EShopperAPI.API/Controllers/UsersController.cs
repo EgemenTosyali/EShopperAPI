@@ -31,5 +31,11 @@ namespace EShopperAPI.API.Controllers
             LoginUserCommandResponse response = await _mediator.Send(request);
             return Ok(response);
         }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login()
+        {
+
+            return Ok();
+        }
     }
 }
