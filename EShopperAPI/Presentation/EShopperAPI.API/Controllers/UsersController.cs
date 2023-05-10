@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.Application.Features.Commands.AppUser.CreateUser;
+using EShopperAPI.Application.Features.Commands.AppUser.GoogleLoginUser;
 using EShopperAPI.Application.Features.Commands.AppUser.LoginUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -32,10 +33,10 @@ namespace EShopperAPI.API.Controllers
             return Ok(response);
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> GoogleLogin(GoogleLoginUserCommandRequest request)
         {
-
-            return Ok();
+            GoogleLoginUserCommandResponse response = await _mediator.Send(request);
+            return Ok(response);
         }
     }
 }
