@@ -1,8 +1,5 @@
 ﻿using EShopperAPI.Application.Abstractions.Services.Authentication;
-using EShopperAPI.Application.Abstractions.Token;
-using EShopperAPI.Application.DTOs;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace EShopperAPI.Application.Features.Commands.AppUser.GoogleLoginUser
 {
