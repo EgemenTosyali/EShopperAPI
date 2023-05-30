@@ -8,6 +8,6 @@ namespace EShopperAPI.Application.Abstractions.Services.Authentication
 {
     public interface IExternalAuthentication
     {
-        Task GoogleLoginAsync();
+        Task<DTOs.Token> GoogleLoginAsync(string idToken, int accessTokenLifeTime);
     }
 }

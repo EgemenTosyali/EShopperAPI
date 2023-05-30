@@ -1,12 +1,6 @@
 ﻿using EShopperAPI.Application.Abstractions.Services;
 using EShopperAPI.Application.DTOs.User;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Application.Features.Commands.AppUser.CreateUser
 {

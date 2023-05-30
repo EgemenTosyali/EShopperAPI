@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.Application.Abstractions.Services;
+using EShopperAPI.Application.Abstractions.Services.Authentication;
 using EShopperAPI.Application.Repositories;
 using EShopperAPI.Domain.Entities.Identities;
 using EShopperAPI.Persistence.Contexts;
@@ -46,6 +47,9 @@ namespace EShopperAPI.Persistence
             service.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
 
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IAuthService, AuthService>();
+            service.AddScoped<IInternalAuthentication, AuthService>();
+            service.AddScoped<IExternalAuthentication, AuthService>();
         }
     }
 }

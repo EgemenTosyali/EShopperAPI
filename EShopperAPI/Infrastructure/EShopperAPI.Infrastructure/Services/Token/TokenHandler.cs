@@ -19,7 +19,7 @@ namespace EShopperAPI.Infrastructure.Services.Token
             this.configuration = configuration;
         }
 
-        public Application.DTOs.Token CreateAccessToken(int lifetimeMinute)
+        public Application.DTOs.Token CreateAccessToken(int lifetimeSeconds)
         {
             Application.DTOs.Token token = new Application.DTOs.Token();
 
@@ -27,7 +27,7 @@ namespace EShopperAPI.Infrastructure.Services.Token
 
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
-            token.ExpirationDate = DateTime.UtcNow.AddMinutes(lifetimeMinute);
+            token.ExpirationDate = DateTime.UtcNow.AddSeconds(lifetimeSeconds);
 
             JwtSecurityToken securityToken = new(
                 audience: configuration["Token:Audience"],

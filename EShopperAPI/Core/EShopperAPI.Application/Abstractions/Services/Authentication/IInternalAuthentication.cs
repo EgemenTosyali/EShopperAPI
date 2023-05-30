@@ -8,6 +8,6 @@ namespace EShopperAPI.Application.Abstractions.Services.Authentication
 {
     public interface IInternalAuthentication
     {
-        Task LoginAsync();
+        Task<DTOs.Token> LoginAsync(string usernameOrEmail, string password, int accessTokenLifeTime);
     }
 }

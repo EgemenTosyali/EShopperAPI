@@ -8,6 +8,6 @@ namespace EShopperAPI.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
-        DTOs.Token CreateAccessToken(int lifetimeMinute);
+        DTOs.Token CreateAccessToken(int lifetimeSeconds);
     }
 }
