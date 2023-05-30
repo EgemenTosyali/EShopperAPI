@@ -1,7 +1,9 @@
-﻿using EShopperAPI.Application.Repositories;
+﻿using EShopperAPI.Application.Abstractions.Services;
+using EShopperAPI.Application.Repositories;
 using EShopperAPI.Domain.Entities.Identities;
 using EShopperAPI.Persistence.Contexts;
 using EShopperAPI.Persistence.Repositories;
+using EShopperAPI.Persistence.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +44,8 @@ namespace EShopperAPI.Persistence
             service.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
             service.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
             service.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
+
+            service.AddScoped<IUserService, UserService>();
         }
     }
 }

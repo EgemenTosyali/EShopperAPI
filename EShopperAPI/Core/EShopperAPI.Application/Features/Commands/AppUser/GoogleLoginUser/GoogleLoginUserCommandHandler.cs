@@ -1,13 +1,7 @@
 ﻿using EShopperAPI.Application.Abstractions.Token;
 using EShopperAPI.Application.DTOs;
-using Google.Apis.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Application.Features.Commands.AppUser.GoogleLoginUser
 {
@@ -24,42 +18,44 @@ namespace EShopperAPI.Application.Features.Commands.AppUser.GoogleLoginUser
 
         public async Task<GoogleLoginUserCommandResponse> Handle(GoogleLoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            var settings = new GoogleJsonWebSignature.ValidationSettings()
-            {
-                Audience = new List<string> { "679370732223-pjg7iiarc39citrcq8gvf3k2kblmteni.apps.googleusercontent.com" }
-            };
-            var payload = await GoogleJsonWebSignature.ValidateAsync(request.idToken);
-            var info = new UserLoginInfo(request.provider, payload.Subject, request.provider);
-            Domain.Entities.Identities.AppUser user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            return null;
 
-            bool result = user != null;
-            if (user == null)
-            {
-                user = await _userManager.FindByEmailAsync(payload.Email);
-                if (user == null)
-                {
-                    user = new()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Email = payload.Email,
-                        UserName = payload.Email,
-                        Name = payload.Name,
-                        SurName = payload.Name
-                    };
-                }
-                var identityResult = await _userManager.CreateAsync(user);
-                result = identityResult.Succeeded;
-            }
-            if (result)
-                await _userManager.AddLoginAsync(user, info);
-            else
-                throw new Exception("Google Authentication failed");
+            //var settings = new GoogleJsonWebSignature.ValidationSettings()
+            //{
+            //    Audience = new List<string> { "679370732223-pjg7iiarc39citrcq8gvf3k2kblmteni.apps.googleusercontent.com" }
+            //};
+            //var payload = await GoogleJsonWebSignature.ValidateAsync(request.idToken);
+            //var info = new UserLoginInfo(request.provider, payload.Subject, request.provider);
+            //Domain.Entities.Identities.AppUser user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
-            Token token = _tokenHandler.CreateAccessToken(5);
-            return new()
-            {
-                token = token
-            };
+            //bool result = user != null;
+            //if (user == null)
+            //{
+            //    user = await _userManager.FindByEmailAsync(payload.Email);
+            //    if (user == null)
+            //    {
+            //        user = new()
+            //        {
+            //            Id = Guid.NewGuid().ToString(),
+            //            Email = payload.Email,
+            //            UserName = payload.Email,
+            //            Name = payload.Name,
+            //            SurName = payload.Name
+            //        };
+            //    }
+            //    var identityResult = await _userManager.CreateAsync(user);
+            //    result = identityResult.Succeeded;
+            //}
+            //if (result)
+            //    await _userManager.AddLoginAsync(user, info);
+            //else
+            //    throw new Exception("Google Authentication failed");
+
+            //Token token = _tokenHandler.CreateAccessToken(5);
+            //return new()
+            //{
+            //    token = token
+            //};
         }
     }
 }

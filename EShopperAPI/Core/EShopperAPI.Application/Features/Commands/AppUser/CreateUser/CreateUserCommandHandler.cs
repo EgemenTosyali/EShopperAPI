@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using EShopperAPI.Application.Abstractions.Services;
+using EShopperAPI.Application.DTOs.User;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,36 +12,29 @@ namespace EShopperAPI.Application.Features.Commands.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
-        readonly UserManager<Domain.Entities.Identities.AppUser> _userManager;
+        readonly IUserService _userService;
 
-        public CreateUserCommandHandler(UserManager<Domain.Entities.Identities.AppUser> userManager)
+        public CreateUserCommandHandler(IUserService userService)
         {
-            _userManager = userManager;
+            _userService = userService;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            IdentityResult result = await _userManager.CreateAsync(new()
+            CreateUserResponse response = await _userService.CreateAsync(new()
             {
-                Id = Guid.NewGuid().ToString(),
                 Email = request.Email,
-                UserName = request.UserName,
                 Name = request.Name,
-                SurName = request.Surname
-
-
-            }, request.Password);
-
-            CreateUserCommandResponse response = new CreateUserCommandResponse() { Succeeded = result.Succeeded };
-
-            if (result.Succeeded)
-                response.Message = "User successfuly registered";
-            else
-                foreach (var error in result.Errors)
-                {
-                    response.Message += $"{error.Code} - {error.Description}\n";
-                }
-            return response;
+                Password = request.Password,
+                PasswordValidator = request.PasswordValidator,
+                Surname = request.Surname,
+                UserName = request.UserName
+            });
+            return new()
+            {
+                Message = response.Message,
+                Succeeded = response.Succeeded,
+            };
         }
     }
 }
