@@ -49,7 +49,8 @@ internal class Program
 
                 ValidAudience = builder.Configuration["Token:Audience"],
                 ValidIssuer = builder.Configuration["Token:Issuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+                LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false
             };
         });
 
@@ -61,20 +62,14 @@ internal class Program
         //    db.Database.Migrate();
         //}
 
+        app.UseStaticFiles();
         app.UseSwagger();
-
         app.UseSwaggerUI();
-
         app.UseCors();
-
         app.UseHttpsRedirection();
-
         app.UseAuthentication();
-
         app.UseAuthorization();
-
         app.MapControllers();
-
         app.Run();
     }
 }
