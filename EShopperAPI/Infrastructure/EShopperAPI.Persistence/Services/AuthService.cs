@@ -7,6 +7,7 @@ using EShopperAPI.Domain.Entities.Identities;
 using Google.Apis.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,15 @@ namespace EShopperAPI.Persistence.Services
         private SignInManager<AppUser> _signInManager;
         private ITokenHandler _tokenHandler;
         private IConfiguration _configuration;
+        private IUserService _userService;
 
-        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler, IConfiguration configuration)
+        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler, IConfiguration configuration, IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHandler = tokenHandler;
             _configuration = configuration;
+            _userService = userService;
         }
         async Task<Token> CreateUserExternalAsync(AppUser user, string email, string name, UserLoginInfo info, int accessTokenLifeTime)
         {
@@ -56,6 +59,7 @@ namespace EShopperAPI.Persistence.Services
                 throw new Exception("Invalid auth");
 
             Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
             return token;
         }
         public async Task<Token> GoogleLoginAsync(string idToken, int accessTokenLifeTime)
@@ -84,9 +88,23 @@ namespace EShopperAPI.Persistence.Services
             if (result.Succeeded)
             {
                 Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
                 return token;
             }
             throw new AuthenticationErrorException();
+        }
+
+        public async Task<Token> RefreshTokenLoginAsync(string refreshToken)
+        {
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+            if (user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
+            {
+                Token token = _tokenHandler.CreateAccessToken(15);
+                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
+                return token;
+            }
+            else
+                throw new Exception("user not found");
         }
     }
 }

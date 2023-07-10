@@ -36,5 +36,16 @@ namespace EShopperAPI.Persistence.Services
                 }
             return response;
         }
+        public async Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime accessTokenDate, int refreshTokenLifeTime)
+        {
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenEndDate = accessTokenDate.AddSeconds(refreshTokenLifeTime);
+                await _userManager.UpdateAsync(user);
+            }
+            else
+                throw new Exception("user not found");
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EShopperAPI.Application.Features.Commands.AppUser.CreateUser;
 using EShopperAPI.Application.Features.Commands.AppUser.GoogleLoginUser;
 using EShopperAPI.Application.Features.Commands.AppUser.LoginUser;
+using EShopperAPI.Application.Features.Commands.AppUser.RefreshTokenLogin;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,12 @@ namespace EShopperAPI.API.Controllers
         public async Task<IActionResult> GoogleLogin(GoogleLoginUserCommandRequest request)
         {
             GoogleLoginUserCommandResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> RefreshTokenLogin([FromBody] RefreshTokenLoginCommandRequest request)
+        {
+            RefreshTokenLoginCommandResponse response = await _mediator.Send(request);
             return Ok(response);
         }
     }
