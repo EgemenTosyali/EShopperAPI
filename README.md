@@ -10,7 +10,7 @@ This is the API component of an e-commerce application project. It is a REST API
 
  [![postgre][postgre.com]][postgre-url]
 ## Getting Started
-To get a local copy up and running follow these simple example steps.
+To set up a local copy and get it running, follow these simple steps as examples.
 
 ### Prerequisites
 * install dotnet
@@ -28,35 +28,46 @@ To get a local copy up and running follow these simple example steps.
     ```sh
     docker run --name PostgreSQL -p 5432:5432 -e POSTGRES_PASSWORD=123456 -d postgres
     ```
-### Configurations
-* You need to add usersecret for EShopperAPI.API project
- image1
 
-* Find the user secret file in this path "%APPDATA%\Microsoft\UserSecrets"
- image2
-
-* Make sure you find the correct user secret
- image3
-
-* Copy the filename the user secret is in
- image4
-
-* Paste the user secret in EShopperAPI.Persistence -> Configuration.cs
- image5
-
-* Select storage system, if you dont have googlestorage or azure you can use local storage
- image6
-
-* Migrate database for first time build EShopperAPI.Persistence -> Package Manager Console, make sure you are running it in Infrastructure -> EShopperAPI.Persistence
- image7
 ### Installation
    ```sh
     git clone https://github.com/EgemenTosyali/EShopperAPI.git
    ```
 
+### Configurations
+* You need to add a user secret to the EShopperAPI.API project.
+
+ ![](images/2.png)
+
+![](images/1.png)
+
+* The user secrets file can be found at this path: "%APPDATA%\Microsoft\UserSecrets".
+
+![](images/3.png)
+
+* Ensure that you locate the correct user secret.
+
+![](images/4.png)
+
+* Copy the filename in which the user secret is stored.
+
+![](images/5.png)
+
+* Paste the user secret into the file "Configuration.cs" located in the "EShopperAPI.Persistence" directory.
+
+![](images/6.png)
+
+* Choose a storage system. If you don't have Google Storage or Azure, you can opt for local storage.
+
+![](images/7.png)
+
+* To perform the initial database migration, navigate to the "EShopperAPI.Persistence" directory in the Package Manager Console. Make sure you are executing the command in the "Infrastructure" folder within "EShopperAPI.Persistence".
+
+![](images/8.png)
+
+
 ## Contributing
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+If you have any suggestions to improve this, feel free to fork the repository and submit a pull request. Alternatively, you can create an issue with the "enhancement" tag. Don't forget to show your support by starring the project! Thank you once again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
