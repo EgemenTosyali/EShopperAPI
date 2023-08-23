@@ -10,6 +10,7 @@ using EShopperAPI.Persistence;
 using EShopperAPI.Persistence.Contexts;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -68,6 +69,15 @@ internal class Program
 
         builder.Host.UseSerilog(log);
 
+        builder.Services.AddHttpLogging(logging =>
+        {
+            logging.LoggingFields = HttpLoggingFields.All;
+            logging.RequestHeaders.Add("sec-ch-ua");
+            logging.MediaTypeOptions.AddText("application/javascript");
+            logging.RequestBodyLogLimit = 4096;
+            logging.ResponseBodyLogLimit = 4096;
+        });
+
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", o =>
         {
             o.TokenValidationParameters = new()
@@ -101,6 +111,7 @@ internal class Program
         app.UseStaticFiles();
 
         app.UseSerilogRequestLogging();
+        app.UseHttpLogging();
 
         app.UseCors();
         app.UseHttpsRedirection();
