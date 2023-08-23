@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.Application.Abstractions.Token;
+using EShopperAPI.Domain.Entities.Identities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -20,7 +21,7 @@ namespace EShopperAPI.Infrastructure.Services.Token
             this.configuration = configuration;
         }
 
-        public Application.DTOs.Token CreateAccessToken(int lifetimeSeconds)
+        public Application.DTOs.Token CreateAccessToken(int lifetimeSeconds, AppUser user)
         {
             Application.DTOs.Token token = new Application.DTOs.Token();
 

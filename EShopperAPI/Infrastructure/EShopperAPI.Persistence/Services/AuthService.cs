@@ -58,7 +58,7 @@ namespace EShopperAPI.Persistence.Services
             else
                 throw new Exception("Invalid auth");
 
-            Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+            Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
             await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
             return token;
         }
@@ -87,7 +87,7 @@ namespace EShopperAPI.Persistence.Services
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
             if (result.Succeeded)
             {
-                Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime);
+                Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
                 await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
                 return token;
             }
@@ -99,7 +99,7 @@ namespace EShopperAPI.Persistence.Services
             AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
             if (user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
             {
-                Token token = _tokenHandler.CreateAccessToken(15);
+                Token token = _tokenHandler.CreateAccessToken(15, user);
                 await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
                 return token;
             }

@@ -1,3 +1,4 @@
+using EShopperAPI.API.Configurations.ColumnWriters;
 using EShopperAPI.Application;
 using EShopperAPI.Application.Validators;
 using EShopperAPI.Infrastructure;
@@ -11,6 +12,9 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Core;
+using Serilog.Sinks.PostgreSQL;
 using System.Text;
 
 internal class Program
@@ -38,6 +42,32 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        Logger log = new LoggerConfiguration()
+            .WriteTo.Console()
+            .WriteTo.File("logs/log.txt")
+            .WriteTo.PostgreSQL(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
+            {
+                "Development" => builder.Configuration.GetConnectionString("PostgreSQL-Development"),
+                "Staging" => builder.Configuration.GetConnectionString("PostgreSQL-Staging"),
+                "Production" => builder.Configuration.GetConnectionString("PostgreSQL-Production")
+            }, "logs", needAutoCreateTable: true,
+                columnOptions: new Dictionary<string, ColumnWriterBase>
+                {
+                    {"message", new RenderedMessageColumnWriter() },
+                    {"message_template", new MessageTemplateColumnWriter() },
+                    {"level", new LevelColumnWriter() },
+                    {"time_stamp", new TimestampColumnWriter() },
+                    {"exception", new ExceptionColumnWriter() },
+                    {"log_event", new LogEventSerializedColumnWriter() } ,
+                    {"user_name", new UsernameColumnWriter() }
+                })
+            .WriteTo.Seq(builder.Configuration["Seq:ServerURL"])
+            .Enrich.FromLogContext()
+            .MinimumLevel.Information()
+            .CreateLogger();
+
+        builder.Host.UseSerilog(log);
+
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", o =>
         {
             o.TokenValidationParameters = new()
@@ -62,13 +92,22 @@ internal class Program
         //    db.Database.Migrate();
         //}
 
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
         app.UseStaticFiles();
-        app.UseSwagger();
-        app.UseSwaggerUI();
+
+        app.UseSerilogRequestLogging();
+
         app.UseCors();
         app.UseHttpsRedirection();
+
         app.UseAuthentication();
         app.UseAuthorization();
+
         app.MapControllers();
         app.Run();
     }

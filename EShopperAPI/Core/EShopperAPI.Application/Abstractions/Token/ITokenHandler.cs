@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EShopperAPI.Domain.Entities.Identities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace EShopperAPI.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
-        DTOs.Token CreateAccessToken(int accessTokenLifeTime);
+        DTOs.Token CreateAccessToken(int accessTokenLifeTime, AppUser user);
         string CreateRefreshToken();
     }
 }
