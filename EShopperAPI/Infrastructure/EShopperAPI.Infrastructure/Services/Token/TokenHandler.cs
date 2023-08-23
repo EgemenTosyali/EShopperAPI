@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,8 @@ namespace EShopperAPI.Infrastructure.Services.Token
                 audience: configuration["Token:Audience"],
                 issuer: configuration["Token:Issuer"],
                 expires: token.ExpirationDate,
-                signingCredentials: signingCredentials);
+                signingCredentials: signingCredentials,
+                claims: new List<Claim> { new(ClaimTypes.Name, user.UserName) });
 
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);

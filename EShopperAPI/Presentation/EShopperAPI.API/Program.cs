@@ -17,6 +17,7 @@ using Serilog;
 using Serilog.Context;
 using Serilog.Core;
 using Serilog.Sinks.PostgreSQL;
+using System.Security.Claims;
 using System.Text;
 
 internal class Program
@@ -91,7 +92,8 @@ internal class Program
                 ValidAudience = builder.Configuration["Token:Audience"],
                 ValidIssuer = builder.Configuration["Token:Issuer"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
-                LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false
+                LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
+                NameClaimType = ClaimTypes.Name
             };
         });
 
