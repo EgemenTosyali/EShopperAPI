@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Serilog.Context;
 using Serilog.Core;
 using Serilog.Sinks.PostgreSQL;
 using System.Text;
@@ -46,6 +47,7 @@ internal class Program
         Logger log = new LoggerConfiguration()
             .WriteTo.Console()
             .WriteTo.File("logs/log.txt")
+            .WriteTo.Seq(builder.Configuration["Seq:ServerURL"])
             .WriteTo.PostgreSQL(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
             {
                 "Development" => builder.Configuration.GetConnectionString("PostgreSQL-Development"),
@@ -62,7 +64,6 @@ internal class Program
                     {"log_event", new LogEventSerializedColumnWriter() } ,
                     {"user_name", new UsernameColumnWriter() }
                 })
-            .WriteTo.Seq(builder.Configuration["Seq:ServerURL"])
             .Enrich.FromLogContext()
             .MinimumLevel.Information()
             .CreateLogger();
@@ -118,6 +119,13 @@ internal class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.Use(async (context, next) =>
+        {
+            var username = context.User?.Identity?.IsAuthenticated != null || true ? context.User.Identity.Name : null;
+            LogContext.PushProperty("user_name", username);
+            await next();
+        });
 
         app.MapControllers();
         app.Run();
