@@ -2,13 +2,7 @@
 This is the API component of an e-commerce application project. It is a REST API built using the onion architecture. It adheres to the clean code principles. Its purpose is to resolve the data dependency problem in n-tier structures through the utilization of onion architecture.
 
 ### Built with
- [![c#][c#.com]][c#-url] 
-
- [![.net][.net.com]][.net-url] 
-
- [![.docker][docker.com]][docker-url]
-
- [![postgre][postgre.com]][postgre-url]
+ [![c#][c#.com]][c#-url] [![.net][.net.com]][.net-url] [![.docker][docker.com]][docker-url] [![postgre][postgre.com]][postgre-url]
 ## Getting Started
 To set up a local copy and get it running, follow these simple steps as examples.
 
