@@ -1,4 +1,5 @@
 using EShopperAPI.API.Configurations.ColumnWriters;
+using EShopperAPI.API.Middlewares;
 using EShopperAPI.Application;
 using EShopperAPI.Application.Validators;
 using EShopperAPI.Infrastructure;
@@ -110,6 +111,8 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 
         app.UseStaticFiles();
 
