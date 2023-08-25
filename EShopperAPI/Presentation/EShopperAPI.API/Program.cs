@@ -1,3 +1,4 @@
+using EShopperAPI.API.Configurations.Builder;
 using EShopperAPI.API.Configurations.ColumnWriters;
 using EShopperAPI.API.Middlewares;
 using EShopperAPI.Application;
@@ -46,29 +47,7 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        Logger log = new LoggerConfiguration()
-            .WriteTo.Console()
-            .WriteTo.File("logs/log.txt")
-            .WriteTo.Seq(builder.Configuration["Seq:ServerURL"])
-            .WriteTo.PostgreSQL(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
-            {
-                "Development" => builder.Configuration.GetConnectionString("PostgreSQL-Development"),
-                "Staging" => builder.Configuration.GetConnectionString("PostgreSQL-Staging"),
-                "Production" => builder.Configuration.GetConnectionString("PostgreSQL-Production")
-            }, "logs", needAutoCreateTable: true,
-                columnOptions: new Dictionary<string, ColumnWriterBase>
-                {
-                    {"message", new RenderedMessageColumnWriter() },
-                    {"message_template", new MessageTemplateColumnWriter() },
-                    {"level", new LevelColumnWriter() },
-                    {"time_stamp", new TimestampColumnWriter() },
-                    {"exception", new ExceptionColumnWriter() },
-                    {"log_event", new LogEventSerializedColumnWriter() } ,
-                    {"user_name", new UsernameColumnWriter() }
-                })
-            .Enrich.FromLogContext()
-            .MinimumLevel.Information()
-            .CreateLogger();
+        Logger log = LoggerConfig.getLogger();
 
         builder.Host.UseSerilog(log);
 
@@ -98,13 +77,16 @@ internal class Program
             };
         });
 
+        
+
         var app = builder.Build();
 
-        //using (var scope = app.Services.CreateScope())
-        //{
-        //    var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
-        //    db.Database.Migrate();
-        //}
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
+            if(!db.Database.EnsureCreated())
+                db.Database.Migrate();
+        }
 
         if (app.Environment.IsDevelopment())
         {

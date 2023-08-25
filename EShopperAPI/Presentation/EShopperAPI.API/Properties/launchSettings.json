@@ -5,7 +5,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PostgreSQL_Development": "User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=EShopperAPI-Development;",
+        "PostgreSQL_Staging": "User ID=postgres;Password=123456;Host=host.docker.internal;Port=5433;Database=EShopperAPI-Staging;",
+        "PostgreSQL_Production": "User ID=postgres;Password=123456;Host=35.234.103.193;Port=5432;Database=EShopperAPI-Production;",
+        "seqURL": "http://localhost:5341/"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7027;"

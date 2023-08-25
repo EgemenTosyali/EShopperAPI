@@ -14,8 +14,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "7027:1234"     
-    environment:
-      ASPNETCORE_ENVIRONMENT: "Staging"
+    env_file:
+      - environments.env
     networks:
       - dockerapi-dev  
   

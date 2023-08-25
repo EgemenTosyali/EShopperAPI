@@ -13,14 +13,11 @@ namespace EShopperAPI.Persistence
 
         public static string ConnectionString()
         {
-            ConfigurationManager configurationManager = new();
-            configurationManager.AddUserSecrets("78dacb82-aaef-449b-9453-cc4d8f900294");
-
             return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
             {
-                "Development" => configurationManager.GetConnectionString("PostgreSQL-Development"),
-                "Staging" => configurationManager.GetConnectionString("PostgreSQL-Staging"),
-                "Production" => configurationManager.GetConnectionString("PostgreSQL-Production")
+                "Development" => Environment.GetEnvironmentVariable("PostgreSQL_Development").ToString(),
+                "Staging" => Environment.GetEnvironmentVariable("PostgreSQL_Staging").ToString(),
+                "Production" => Environment.GetEnvironmentVariable("PostgreSQL_Production").ToString()
             };
         }
     }
