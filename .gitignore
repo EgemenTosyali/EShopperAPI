@@ -445,6 +445,8 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
+*launchSettings.json
+
 ##
 ## Visual Studio Code
 ##
