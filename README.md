@@ -29,28 +29,6 @@ To set up a local copy and get it running, follow these simple steps as examples
    ```
 
 ### Configurations
-* You need to add a user secret to the EShopperAPI.API project.
-
- ![](images/2.png)
-
-![](images/1.png)
-
-* The user secrets file can be found at this path: "%APPDATA%\Microsoft\UserSecrets".
-
-![](images/3.png)
-
-* Ensure that you locate the correct user secret.
-
-![](images/4.png)
-
-* Copy the filename in which the user secret is stored.
-
-![](images/5.png)
-
-* Paste the user secret into the file "Configuration.cs" located in the "EShopperAPI.Persistence" directory.
-
-![](images/6.png)
-
 * Choose a storage system. If you don't have Google Storage or Azure, you can opt for local storage.
 
 ![](images/7.png)
