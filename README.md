@@ -41,10 +41,6 @@ To set up a local copy and get it running, follow these simple steps as examples
 
 ![](images/ss.png)
 
-* To perform the initial database migration, navigate to the "EShopperAPI.Persistence" directory in the Package Manager Console. Make sure you are executing the command in the "Infrastructure" folder within "EShopperAPI.Persistence".
-
-![](images/8.png)
-
 That's it 🎊
 
 ## Contributing
