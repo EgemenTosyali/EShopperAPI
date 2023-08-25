@@ -29,15 +29,15 @@ To set up a local copy and get it running, follow these simple steps as examples
    ```
 
 ### Configurations
-* Choose a storage system. If you don't have Google Storage or Azure, you can opt for local storage.
+* Choose a storage system. If you don't have Google Storage or Azure, you can opt for local storage in Program.cs.
 
 ![](images/7.png)
 
+* Remember to complete the token configuration in the "appsettings" variables.
+
+![](images/ss_token.png)
+
 * If you want to choose Google Storage, you need to fill in the "appsettings" variables.
-
-![](images/ss-appsettings.png)
-
-*Remember to complete the token configuration.
 
 ![](images/ss-appsettings.png)
 
@@ -45,6 +45,7 @@ To set up a local copy and get it running, follow these simple steps as examples
 
 ![](images/8.png)
 
+That's it 🎊
 
 ## Contributing
 If you have any suggestions to improve this, feel free to fork the repository and submit a pull request. Alternatively, you can create an issue with the "enhancement" tag. Don't forget to show your support by starring the project! Thank you once again!
