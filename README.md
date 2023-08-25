@@ -39,7 +39,7 @@ To set up a local copy and get it running, follow these simple steps as examples
 
 * If you want to choose Google Storage, you need to fill in the "appsettings" variables.
 
-![](images/ss-appsettings.png)
+![](images/ss.png)
 
 * To perform the initial database migration, navigate to the "EShopperAPI.Persistence" directory in the Package Manager Console. Make sure you are executing the command in the "Infrastructure" folder within "EShopperAPI.Persistence".
 
