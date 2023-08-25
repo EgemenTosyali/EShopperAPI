@@ -69,9 +69,9 @@ internal class Program
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
 
-                ValidAudience = builder.Configuration["Token:Audience"],
-                ValidIssuer = builder.Configuration["Token:Issuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+                ValidAudience = builder.Configuration["TokenAudience"],
+                ValidIssuer = builder.Configuration["TokenIssuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenSecurityKey"])),
                 LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
                 NameClaimType = ClaimTypes.Name
             };

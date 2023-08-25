@@ -17,7 +17,7 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Azure
         BlobContainerClient _blobContainerClient;
         public AzureStorage(IConfiguration configuration)
         {
-            _blobServiceClient = new(configuration["Storage:Azure"]);
+            _blobServiceClient = new(Environment.GetEnvironmentVariable("StorageAzure"));
         }
         public async Task DeleteAsync(string containerName, string fileName)
         {
