@@ -3,11 +3,6 @@ using EShopperAPI.Domain.Entities.Common;
 using EShopperAPI.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Persistence.Repositories
 {

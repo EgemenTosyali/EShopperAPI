@@ -1,12 +1,10 @@
-﻿using EShopperAPI.Application.Abstractions.Storage;
-using EShopperAPI.Application.Features.Commands.Product.CreateProduct;
+﻿using EShopperAPI.Application.Features.Commands.Product.CreateProduct;
 using EShopperAPI.Application.Features.Commands.Product.RemoveProduct;
 using EShopperAPI.Application.Features.Commands.ProductImageFile.RemoveProductImageFile;
 using EShopperAPI.Application.Features.Commands.ProductImageFile.UploadProductImageFile;
 using EShopperAPI.Application.Features.Queries.Product.GetAllProduct;
 using EShopperAPI.Application.Features.Queries.Product.GetByIdProduct;
 using EShopperAPI.Application.Features.Queries.ProductImageFile.GetProductImageFile;
-using EShopperAPI.Application.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

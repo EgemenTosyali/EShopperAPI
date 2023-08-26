@@ -1,9 +1,5 @@
 ﻿using EShopperAPI.Application.Features.Commands.AppUser.CreateUser;
-using EShopperAPI.Application.Features.Commands.AppUser.GoogleLoginUser;
-using EShopperAPI.Application.Features.Commands.AppUser.LoginUser;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShopperAPI.API.Controllers

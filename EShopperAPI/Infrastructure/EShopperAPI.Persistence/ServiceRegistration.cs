@@ -5,16 +5,8 @@ using EShopperAPI.Domain.Entities.Identities;
 using EShopperAPI.Persistence.Contexts;
 using EShopperAPI.Persistence.Repositories;
 using EShopperAPI.Persistence.Services;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Persistence
 {

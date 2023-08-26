@@ -1,13 +1,10 @@
 using EShopperAPI.API.Configurations.Builder;
-using EShopperAPI.API.Configurations.ColumnWriters;
 using EShopperAPI.API.Middlewares;
 using EShopperAPI.Application;
 using EShopperAPI.Application.Validators;
 using EShopperAPI.Infrastructure;
 using EShopperAPI.Infrastructure.Filters;
-using EShopperAPI.Infrastructure.Services.Storage.Azure;
 using EShopperAPI.Infrastructure.Services.Storage.Google_Cloud;
-using EShopperAPI.Infrastructure.Services.Storage.Local;
 using EShopperAPI.Persistence;
 using EShopperAPI.Persistence.Contexts;
 using FluentValidation.AspNetCore;
@@ -18,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Context;
 using Serilog.Core;
-using Serilog.Sinks.PostgreSQL;
 using System.Security.Claims;
 using System.Text;
 

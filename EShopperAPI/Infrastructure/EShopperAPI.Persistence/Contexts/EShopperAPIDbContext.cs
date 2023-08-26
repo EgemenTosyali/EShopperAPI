@@ -3,11 +3,6 @@ using EShopperAPI.Domain.Entities.Common;
 using EShopperAPI.Domain.Entities.Identities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using File = EShopperAPI.Domain.Entities.File;
 
 namespace EShopperAPI.Persistence.Contexts

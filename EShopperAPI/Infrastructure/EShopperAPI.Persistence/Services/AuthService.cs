@@ -2,18 +2,11 @@
 using EShopperAPI.Application.Abstractions.Token;
 using EShopperAPI.Application.DTOs;
 using EShopperAPI.Application.Exceptions;
-using EShopperAPI.Application.Features.Commands.AppUser.LoginUser;
 using EShopperAPI.Domain.Entities.Identities;
 using Google.Apis.Auth;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Persistence.Services
 {

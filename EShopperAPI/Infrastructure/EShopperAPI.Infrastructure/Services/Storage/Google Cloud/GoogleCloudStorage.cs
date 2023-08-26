@@ -1,17 +1,8 @@
-﻿using Azure.Storage.Blobs;
-using EShopperAPI.Application.Abstractions.Storage.Google_Cloud;
-using Google.Api.Gax.ResourceNames;
+﻿using EShopperAPI.Application.Abstractions.Storage.Google_Cloud;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShopperAPI.Infrastructure.Services.Storage.Google_Cloud
 {
