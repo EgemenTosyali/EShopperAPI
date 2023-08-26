@@ -23,7 +23,7 @@ namespace EShopperAPI.Application.Features.Queries.ProductImageFile.GetProductIm
 
             return product?.ProductImageFiles.Select(p => new GetProductImageFileQueryResponse
             {
-                Path = $"{_configuration["GoogleCloudUrl"]}/{p.FilePath}?authuser=1",
+                Path = $"{_configuration["GoogleCloudUrl"]}/{p.FilePath}",
                 FileName = p.FileName,
                 Id = p.Id
             }).ToList();
