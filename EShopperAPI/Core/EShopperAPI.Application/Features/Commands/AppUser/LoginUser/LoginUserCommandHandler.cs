@@ -15,7 +15,7 @@ namespace EShopperAPI.Application.Features.Commands.AppUser.LoginUser
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            var token = await _authService.LoginAsync(request.usernameOrEmail, request.password, 15);
+            var token = await _authService.LoginAsync(request.usernameOrEmail, request.password, 1500);
             return new LoginUserCommandSuccessResponse()
             {
                 Token = token

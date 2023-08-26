@@ -52,7 +52,7 @@ namespace EShopperAPI.Persistence.Services
                 throw new Exception("Invalid auth");
 
             Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
-            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
+            await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 1500);
             return token;
         }
         public async Task<Token> GoogleLoginAsync(string idToken, int accessTokenLifeTime)
@@ -81,7 +81,7 @@ namespace EShopperAPI.Persistence.Services
             if (result.Succeeded)
             {
                 Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
-                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
+                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 1500);
                 return token;
             }
             throw new AuthenticationErrorException();
@@ -92,8 +92,8 @@ namespace EShopperAPI.Persistence.Services
             AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
             if (user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
             {
-                Token token = _tokenHandler.CreateAccessToken(15, user);
-                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 15);
+                Token token = _tokenHandler.CreateAccessToken(1500, user);
+                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 1500);
                 return token;
             }
             else
