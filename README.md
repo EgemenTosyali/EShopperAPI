@@ -29,15 +29,11 @@ To set up a local copy and get it running, follow these simple steps as examples
    ```
 
 ### Configurations
-* Choose a storage system. If you don't have Google Storage or Azure, you can opt for local storage in Program.cs.
-
-![](images/7.png)
-
-* Remember to complete the token configuration in the "appsettings" variables.
+* Complete the token configuration in the "appsettings" variables.
 
 ![](images/ss_token.png)
 
-* If you want to choose Google Storage, you need to fill in the "appsettings" variables.
+* This API utilizes Google Bucket storage by default. You are required to complete the "appsettings" variables to access product images for reading/writing.
 
 ![](images/ss.png)
 
