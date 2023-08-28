@@ -7,6 +7,7 @@ using EShopperAPI.Infrastructure.Filters;
 using EShopperAPI.Infrastructure.Services.Storage.Google_Cloud;
 using EShopperAPI.Persistence;
 using EShopperAPI.Persistence.Contexts;
+using EShopperAPI.SignalR;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
@@ -27,16 +28,13 @@ internal class Program
         builder.Services.AddPersistenceServices();
         builder.Services.AddInfrastructureServices();
         builder.Services.AddAplicationServices();
+        builder.Services.AddSignalRServices();
 
         //builder.Services.AddStorage<AzureStorage>();
         builder.Services.AddStorage<GoogleCloudStorage>();
 
-        builder.Services.AddCors(options => options.AddDefaultPolicy(
-            policy =>
-            {
-                policy.WithOrigins("https://localhost:7777", "http://localhost:7777")
-                .AllowAnyHeader().AllowAnyMethod();
-            }));
+        builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>{policy.WithOrigins("https://localhost:7777", "http://localhost:7777").AllowAnyHeader().AllowAnyMethod().AllowCredentials();}));
+
         builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
         builder.Services.AddEndpointsApiExplorer();
@@ -108,6 +106,9 @@ internal class Program
         });
 
         app.MapControllers();
+
+        app.MapHubs();
+
         app.Run();
     }
 }

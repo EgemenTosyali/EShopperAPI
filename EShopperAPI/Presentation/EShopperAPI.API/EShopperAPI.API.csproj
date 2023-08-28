@@ -31,6 +31,7 @@
     <ProjectReference Include="..\..\Core\EShopperAPI.Application\EShopperAPI.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EShopperAPI.Infrastructure\EShopperAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EShopperAPI.Persistence\EShopperAPI.Persistence.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EShopperAPI.SignalR\EShopperAPI.SignalR.csproj" />
   </ItemGroup>
 
   <ItemGroup>

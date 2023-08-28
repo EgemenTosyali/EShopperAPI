@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopperAPI.Persistence", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopperAPI.API", "EShopperAPI\Presentation\EShopperAPI.API\EShopperAPI.API.csproj", "{B6E87A11-D7FA-4A52-B5CE-C114AF35EEF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopperAPI.SignalR", "EShopperAPI\Infrastructure\EShopperAPI.SignalR\EShopperAPI.SignalR.csproj", "{245D107F-D7AF-4463-80F3-8AA8D5F5EB8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B6E87A11-D7FA-4A52-B5CE-C114AF35EEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6E87A11-D7FA-4A52-B5CE-C114AF35EEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6E87A11-D7FA-4A52-B5CE-C114AF35EEF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245D107F-D7AF-4463-80F3-8AA8D5F5EB8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245D107F-D7AF-4463-80F3-8AA8D5F5EB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245D107F-D7AF-4463-80F3-8AA8D5F5EB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245D107F-D7AF-4463-80F3-8AA8D5F5EB8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{4D090040-19E9-49C6-AE10-C124880C344F} = {1661D58F-E0DC-4320-B686-1742FF223656}
 		{7C531C71-C460-41E7-8A8F-C2FADF401201} = {1661D58F-E0DC-4320-B686-1742FF223656}
 		{B6E87A11-D7FA-4A52-B5CE-C114AF35EEF0} = {DD4322C6-2580-4EE4-B375-7219C5127F6F}
+		{245D107F-D7AF-4463-80F3-8AA8D5F5EB8A} = {1661D58F-E0DC-4320-B686-1742FF223656}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B69BFF34-3A9F-4EE1-A6EC-9E8CD26E94C9}

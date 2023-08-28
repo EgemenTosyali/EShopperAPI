@@ -1,4 +1,5 @@
-﻿using EShopperAPI.Application.Repositories;
+﻿using EShopperAPI.Application.Abstractions.Hubs;
+using EShopperAPI.Application.Repositories;
 using MediatR;
 
 namespace EShopperAPI.Application.Features.Commands.Product.CreateProduct
@@ -6,10 +7,12 @@ namespace EShopperAPI.Application.Features.Commands.Product.CreateProduct
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, CreateProductCommandResponse>
     {
         private IProductWriteRepository _productWriteRepository;
+        private IProductHubService _productHubService;
 
-        public CreateProductCommandHandler(IProductWriteRepository productWriteRepository)
+        public CreateProductCommandHandler(IProductWriteRepository productWriteRepository, IProductHubService productHubService)
         {
             _productWriteRepository = productWriteRepository;
+            _productHubService = productHubService;
         }
 
         public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
@@ -21,6 +24,8 @@ namespace EShopperAPI.Application.Features.Commands.Product.CreateProduct
                 Stock = request.Stock
             });
             await _productWriteRepository.SaveAsync();
+
+            await _productHubService.ProductAddedMessageAsync($"{request.Name} ADDED");
 
             return new();
         }
