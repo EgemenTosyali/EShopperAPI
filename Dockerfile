@@ -6,6 +6,7 @@ COPY ["EShopperAPI/Core/EShopperAPI.Application/EShopperAPI.Application.csproj",
 COPY ["EShopperAPI/Core/EShopperAPI.Domain/EShopperAPI.Domain.csproj", "EShopperAPI/Core/EShopperAPI.Domain/"]
 COPY ["EShopperAPI/Infrastructure/EShopperAPI.Infrastructure/EShopperAPI.Infrastructure.csproj", "EShopperAPI/Infrastructure/EShopperAPI.Infrastructure/"]
 COPY ["EShopperAPI/Infrastructure/EShopperAPI.Persistence/EShopperAPI.Persistence.csproj", "EShopperAPI/Infrastructure/EShopperAPI.Persistence/"]
+COPY ["EShopperAPI/Infrastructure/EShopperAPI.SignalR/EShopperAPI.SignalR.csproj", "EShopperAPI/Infrastructure/EShopperAPI.SignalR/"]
 COPY ./*.sln .
 
 RUN dotnet restore

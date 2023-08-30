@@ -13,7 +13,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "7027:1234"     
+      - "7027:1234"   
+    restart: always  
     env_file:
       - environments.env
     networks:
@@ -22,7 +23,7 @@ services:
   postgres_image:
     image: postgres:latest
     ports:
-      - "5433:5432"
+      - "5432:5432"
     restart: always
     environment:
       POSTGRES_USER: "postgres"
