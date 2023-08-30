@@ -33,7 +33,7 @@ internal class Program
         //builder.Services.AddStorage<AzureStorage>();
         builder.Services.AddStorage<GoogleCloudStorage>();
 
-        builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>{policy.WithOrigins("https://localhost:7777", "http://localhost:7777").AllowAnyHeader().AllowAnyMethod().AllowCredentials();}));
+        //builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>{policy.WithOrigins("https://localhost:7777", "http://localhost:7777").AllowAnyHeader().AllowAnyMethod().AllowCredentials();}));
 
         builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProduct_Validator>()).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
@@ -92,7 +92,7 @@ internal class Program
         app.UseSerilogRequestLogging();
         app.UseHttpLogging();
 
-        app.UseCors();
+        //app.UseCors();
         //app.UseHttpsRedirection();
 
         app.UseAuthentication();
