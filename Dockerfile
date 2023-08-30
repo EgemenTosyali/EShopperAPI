@@ -19,4 +19,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=sdkimage /publish .
 ENV ASPNETCORE_URLS="http://+:1234" 
-ENTRYPOINT ["dotnet", "EShopperAPI.API.dll"]
+ENTRYPOINT ["dotnet", "EShopperAPI.API.dll", "--launch-profile EShopperAPI.API"]
