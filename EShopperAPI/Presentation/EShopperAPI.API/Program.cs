@@ -75,7 +75,7 @@ internal class Program
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
-            if(!db.Database.EnsureCreated())
+            if (!db.Database.EnsureCreated())
                 db.Database.Migrate();
         }
 
@@ -93,7 +93,7 @@ internal class Program
         app.UseHttpLogging();
 
         app.UseCors();
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
 
         app.UseAuthentication();
         app.UseAuthorization();

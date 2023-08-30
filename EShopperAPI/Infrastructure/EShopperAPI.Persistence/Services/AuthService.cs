@@ -59,7 +59,7 @@ namespace EShopperAPI.Persistence.Services
         {
             var settings = new GoogleJsonWebSignature.ValidationSettings()
             {
-                Audience = new List<string> { Environment.GetEnvironmentVariable("ExternalLoginConfigs_GoogleAudience") }
+                Audience = new List<string> { _configuration.GetSection("ExternalLoginConfigs_GoogleAudience").Value }
             };
             var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
             var info = new UserLoginInfo("GOOGLE", payload.Subject, "GOOGLE");

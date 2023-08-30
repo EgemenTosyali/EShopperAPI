@@ -14,9 +14,9 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Google_Cloud
 
         public GoogleCloudStorage(IConfiguration configuration)
         {
-            _googleCredential = GoogleCredential.FromFile(Environment.GetEnvironmentVariable("GoogleCredentialFile"));
+            _googleCredential = GoogleCredential.FromFile(configuration.GetSection("GoogleCredentialFile").Value);
             _storageClient = StorageClient.Create(_googleCredential);
-            _bucketName = Environment.GetEnvironmentVariable("GoogleCloudStorageBucket");
+            _bucketName = configuration.GetSection("GoogleCloudStorageBucket").Value;
         }
         public async Task DeleteAsync(string path, string fileName)
         {

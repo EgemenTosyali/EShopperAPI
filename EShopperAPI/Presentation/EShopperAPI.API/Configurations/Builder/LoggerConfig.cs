@@ -9,16 +9,13 @@ namespace EShopperAPI.API.Configurations.Builder
     {
         public static Logger getLogger()
         {
+            ConfigurationManager configurationManager = new();
+            configurationManager.AddJsonFile("appsettings.json");
             Logger log = new LoggerConfiguration()
                 .WriteTo.Console()
                 .WriteTo.File("logs/log.txt")
-                .WriteTo.Seq(Environment.GetEnvironmentVariable("seqURL").ToString())
-                .WriteTo.PostgreSQL(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") switch
-                {
-                    "Development" => Environment.GetEnvironmentVariable("PostgreSQL_Development").ToString(),
-                    "Staging" => Environment.GetEnvironmentVariable("PostgreSQL_Staging").ToString(),
-                    "Production" => Environment.GetEnvironmentVariable("PostgreSQL_Production").ToString()
-                }, "logs", needAutoCreateTable: true,
+                .WriteTo.Seq(configurationManager.GetSection("seqURL").Value)
+                .WriteTo.PostgreSQL(configurationManager.GetSection("PostgreSQL_ConnectionString").Value, "logs", needAutoCreateTable: true,
                     columnOptions: new Dictionary<string, ColumnWriterBase>
                     {
                         {"message", new RenderedMessageColumnWriter() },

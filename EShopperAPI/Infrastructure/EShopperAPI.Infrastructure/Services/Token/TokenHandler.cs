@@ -11,26 +11,26 @@ namespace EShopperAPI.Infrastructure.Services.Token
 {
     public class TokenHandler : ITokenHandler
     {
-        private IConfiguration configuration;
+        private IConfiguration _configuration;
 
         public TokenHandler(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
         public Application.DTOs.Token CreateAccessToken(int lifetimeSeconds, AppUser user)
         {
             Application.DTOs.Token token = new Application.DTOs.Token();
 
-            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TokenSecurityKey")));
+            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_configuration.GetSection("TokenSecurityKey").Value));
 
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
             token.ExpirationDate = DateTime.UtcNow.AddSeconds(lifetimeSeconds);
 
             JwtSecurityToken securityToken = new(
-                audience: Environment.GetEnvironmentVariable("TokenAudience"),
-                issuer: Environment.GetEnvironmentVariable("TokenIssuer"),
+                audience: _configuration.GetSection("TokenAudience").Value,
+                issuer: _configuration.GetSection("TokenIssuer").Value,
                 expires: token.ExpirationDate,
                 signingCredentials: signingCredentials,
                 claims: new List<Claim> { new(ClaimTypes.Name, user.UserName) });
