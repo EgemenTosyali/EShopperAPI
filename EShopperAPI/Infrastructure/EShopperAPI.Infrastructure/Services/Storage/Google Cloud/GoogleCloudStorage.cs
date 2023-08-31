@@ -16,7 +16,7 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Google_Cloud
         public GoogleCloudStorage(IConfiguration configuration)
         {
             _configuration = configuration;
-            _googleCredential = GoogleCredential.FromFile(_configuration["GoogleCredentialFile"]);
+            _googleCredential = GoogleCredential.FromFile("ecommerce.json");
             _storageClient = StorageClient.Create(_googleCredential);
             _bucketName = _configuration["GoogleCloudStorageBucket"];
         }
