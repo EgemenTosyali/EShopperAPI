@@ -3,6 +3,7 @@ using Azure.Storage.Blobs.Models;
 using EShopperAPI.Application.Abstractions.Storage.Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace EShopperAPI.Infrastructure.Services.Storage.Azure
 {
@@ -10,9 +11,12 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Azure
     {
         readonly BlobServiceClient _blobServiceClient;
         BlobContainerClient _blobContainerClient;
-        public AzureStorage(IConfiguration configuration)
+        public AzureStorage()
         {
-            _blobServiceClient = new(configuration.GetSection("StorageAzure").Value);
+            ConfigurationManager configurationManager = new ConfigurationManager();
+            configurationManager.AddJsonFile("appsettings.json").AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly());
+
+            _blobServiceClient = new(configurationManager.GetSection("StorageAzure").Value);
         }
         public async Task DeleteAsync(string containerName, string fileName)
         {

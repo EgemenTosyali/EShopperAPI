@@ -9,7 +9,7 @@ namespace EShopperAPI.Persistence
         public EShopperAPIDbContext CreateDbContext(string[] args)
         {
             DbContextOptionsBuilder<EShopperAPIDbContext> dbContextOptionsBuilder = new();
-            dbContextOptionsBuilder.UseNpgsql(Configuration.ConnectionString());
+            dbContextOptionsBuilder.UseNpgsql(ConfigurationService.GetConfigurationValue("PostgreSQL_ConnectionString"));
             return new(dbContextOptionsBuilder.Options);
         }
     }

@@ -7,6 +7,7 @@ using EShopperAPI.Persistence.Repositories;
 using EShopperAPI.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace EShopperAPI.Persistence
 {
@@ -14,7 +15,7 @@ namespace EShopperAPI.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection service)
         {
-            service.AddDbContext<EShopperAPIDbContext>(option => option.UseNpgsql(Configuration.ConnectionString()));
+            service.AddDbContext<EShopperAPIDbContext>(option => option.UseNpgsql(ConfigurationService.GetConfigurationValue("PostgreSQL_ConnectionString")));
             service.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.Password.RequiredLength = 3;

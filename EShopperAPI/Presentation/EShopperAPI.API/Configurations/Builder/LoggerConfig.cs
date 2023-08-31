@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.API.Configurations.ColumnWriters;
+using EShopperAPI.Persistence;
 using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.PostgreSQL;
@@ -9,13 +10,11 @@ namespace EShopperAPI.API.Configurations.Builder
     {
         public static Logger getLogger()
         {
-            ConfigurationManager configurationManager = new();
-            configurationManager.AddJsonFile("appsettings.json");
             Logger log = new LoggerConfiguration()
                 .WriteTo.Console()
                 .WriteTo.File("logs/log.txt")
-                .WriteTo.Seq(configurationManager.GetSection("seqURL").Value)
-                .WriteTo.PostgreSQL(configurationManager.GetSection("PostgreSQL_ConnectionString").Value, "logs", needAutoCreateTable: true,
+                .WriteTo.Seq(ConfigurationService.GetConfigurationValue("seqURL"))
+                .WriteTo.PostgreSQL(ConfigurationService.GetConfigurationValue("PostgreSQL_ConnectionString"), "logs", needAutoCreateTable: true,
                     columnOptions: new Dictionary<string, ColumnWriterBase>
                     {
                         {"message", new RenderedMessageColumnWriter() },

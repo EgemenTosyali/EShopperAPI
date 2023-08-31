@@ -3,6 +3,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace EShopperAPI.Infrastructure.Services.Storage.Google_Cloud
 {
@@ -14,9 +15,13 @@ namespace EShopperAPI.Infrastructure.Services.Storage.Google_Cloud
 
         public GoogleCloudStorage(IConfiguration configuration)
         {
-            _googleCredential = GoogleCredential.FromFile(configuration.GetSection("GoogleCredentialFile").Value);
+
+            ConfigurationManager configurationManager = new ConfigurationManager();
+            configurationManager.AddJsonFile("appsettings.json").AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly());
+
+            _googleCredential = GoogleCredential.FromFile(configurationManager.GetSection("GoogleCredentialFile").Value);
             _storageClient = StorageClient.Create(_googleCredential);
-            _bucketName = configuration.GetSection("GoogleCloudStorageBucket").Value;
+            _bucketName = configurationManager.GetSection("GoogleCloudStorageBucket").Value;
         }
         public async Task DeleteAsync(string path, string fileName)
         {
