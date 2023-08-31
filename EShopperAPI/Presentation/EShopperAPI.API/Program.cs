@@ -26,6 +26,8 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddDbContext<EShopperAPIDbContext>(option => option.UseNpgsql(builder.Configuration.GetSection("PostgreSQL_ConnectionString").Value));
+
         builder.Services.AddPersistenceServices();
         builder.Services.AddInfrastructureServices();
         builder.Services.AddAplicationServices();
@@ -43,7 +45,8 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        Logger log = LoggerConfig.getLogger();
+        var logger = new LoggerConfig(builder.Configuration);
+        Logger log = logger.getLogger();
 
         builder.Host.UseSerilog(log);
 

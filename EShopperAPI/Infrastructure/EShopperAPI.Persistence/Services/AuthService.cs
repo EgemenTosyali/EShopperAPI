@@ -12,17 +12,19 @@ namespace EShopperAPI.Persistence.Services
 {
     public class AuthService : IAuthService
     {
-        private UserManager<AppUser> _userManager;
-        private SignInManager<AppUser> _signInManager;
-        private ITokenHandler _tokenHandler;
-        private IUserService _userService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly ITokenHandler _tokenHandler;
+        private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler, IUserService userService)
+        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler, IUserService userService, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHandler = tokenHandler;
             _userService = userService;
+            _configuration = configuration;
         }
         async Task<Token> CreateUserExternalAsync(AppUser user, string email, string name, UserLoginInfo info, int accessTokenLifeTime)
         {
@@ -57,7 +59,7 @@ namespace EShopperAPI.Persistence.Services
         {
             var settings = new GoogleJsonWebSignature.ValidationSettings()
             {
-                Audience = new List<string> { ConfigurationService.GetConfigurationValue("ExternalLoginConfigs_GoogleAudience")}
+                Audience = new List<string> { _configuration["ExternalLoginConfigs_GoogleAudience"]}
             };
             var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
             var info = new UserLoginInfo("GOOGLE", payload.Subject, "GOOGLE");

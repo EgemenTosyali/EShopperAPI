@@ -6,15 +6,20 @@ using Serilog.Sinks.PostgreSQL;
 
 namespace EShopperAPI.API.Configurations.Builder
 {
-    public static class LoggerConfig
+    public class LoggerConfig
     {
-        public static Logger getLogger()
+        private readonly IConfiguration _configuration;
+        public LoggerConfig(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public Logger getLogger()
         {
             Logger log = new LoggerConfiguration()
                 .WriteTo.Console()
                 .WriteTo.File("logs/log.txt")
-                .WriteTo.Seq(ConfigurationService.GetConfigurationValue("seqURL"))
-                .WriteTo.PostgreSQL(ConfigurationService.GetConfigurationValue("PostgreSQL_ConnectionString"), "logs", needAutoCreateTable: true,
+                .WriteTo.Seq(_configuration["seqURL"])
+                .WriteTo.PostgreSQL(_configuration["PostgreSQL_ConnectionString"], "logs", needAutoCreateTable: true,
                     columnOptions: new Dictionary<string, ColumnWriterBase>
                     {
                         {"message", new RenderedMessageColumnWriter() },

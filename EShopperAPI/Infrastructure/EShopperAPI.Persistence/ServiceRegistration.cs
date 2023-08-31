@@ -15,7 +15,6 @@ namespace EShopperAPI.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection service)
         {
-            service.AddDbContext<EShopperAPIDbContext>(option => option.UseNpgsql(ConfigurationService.GetConfigurationValue("PostgreSQL_ConnectionString")));
             service.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.Password.RequiredLength = 3;
@@ -25,6 +24,7 @@ namespace EShopperAPI.Persistence
                 options.Password.RequireUppercase = false;
 
             }).AddEntityFrameworkStores<EShopperAPIDbContext>();
+
             service.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             service.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             service.AddScoped<IOrderReadRepository, OrderReadRepository>();
