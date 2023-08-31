@@ -3,20 +3,18 @@ using Azure.Storage.Blobs.Models;
 using EShopperAPI.Application.Abstractions.Storage.Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace EShopperAPI.Infrastructure.Services.Storage.Azure
 {
     public class AzureStorage : Storage, IAzureStorage
     {
-        readonly BlobServiceClient _blobServiceClient;
+        private readonly BlobServiceClient _blobServiceClient;
+        private readonly IConfiguration _configuration;
         BlobContainerClient _blobContainerClient;
-        public AzureStorage()
+        public AzureStorage(IConfiguration configuration)
         {
-            ConfigurationManager configurationManager = new ConfigurationManager();
-            configurationManager.AddJsonFile("appsettings.json").AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly());
-
-            _blobServiceClient = new(configurationManager.GetSection("StorageAzure").Value);
+            _blobServiceClient = new(_configuration["StorageAzure"]);
+            _configuration = configuration;
         }
         public async Task DeleteAsync(string containerName, string fileName)
         {
