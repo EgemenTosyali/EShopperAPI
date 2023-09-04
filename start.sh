@@ -1,1 +1,1 @@
-docker compose up --force-recreate --build -d && docker rmi $(docker images -f "dangling=true" -q)
+docker compose up --force-recreate --build -d && docker images -q -a | xargs docker inspect --format='{{.Id}}{{range $rt := .RepoTags}} {{$rt}} {{end}}'|grep -v ':'
