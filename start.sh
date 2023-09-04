@@ -1,1 +1,1 @@
-docker compose up --force-recreate --build -d && docker images -q -a | xargs docker inspect --format='{{.Id}}{{range $rt := .RepoTags}} {{$rt}} {{end}}'|grep -v ':'
+docker compose up --force-recreate --build -d && docker image prune -f
