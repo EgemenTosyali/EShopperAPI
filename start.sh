@@ -1,1 +1,1 @@
-docker compose up --force-recreate --build -d && docker images prune
+docker compose up --force-recreate --build -d && docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
