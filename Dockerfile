@@ -18,5 +18,5 @@ RUN dotnet publish "EShopperAPI/Presentation/EShopperAPI.API/EShopperAPI.API.csp
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=sdkimage /publish .
-ENV ASPNETCORE_URLS="http://+:1234" ASPNETCORE_ENVIRONMENT="Development"
-ENTRYPOINT ["dotnet", "EShopperAPI.API.dll", "--launch-profile EShopperAPI.API"]
+ENV ASPNETCORE_URLS="http://+:1234" 
+ENTRYPOINT ["dotnet", "EShopperAPI.API.dll"]

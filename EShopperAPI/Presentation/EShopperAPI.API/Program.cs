@@ -80,9 +80,13 @@ internal class Program
 
         using (var scope = app.Services.CreateScope())
         {
-            var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
-            if (!db.Database.EnsureCreated())
-                db.Database.Migrate();
+            try
+            {
+                var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
+                if (!db.Database.EnsureCreated())
+                    db.Database.Migrate();
+            }
+            catch { }
         }
 
         if (app.Environment.IsDevelopment())

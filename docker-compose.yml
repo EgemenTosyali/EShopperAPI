@@ -7,8 +7,6 @@ networks:
 services:
   dockerapi:
     image: eshopperapi:latest
-    depends_on:
-      - "postgres_image"
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,19 +15,6 @@ services:
     restart: always  
     env_file:
       - environments.env
-    networks:
-      - dockerapi-dev  
-  
-  postgres_image:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "123456"
-      POSTGRES_DB: "EShopperAPI-Development"
-    networks:
-      - dockerapi-dev
+
 volumes:
   db_volume:
