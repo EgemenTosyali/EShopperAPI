@@ -82,6 +82,7 @@ internal class Program
         {
             try
             {
+
                 var db = scope.ServiceProvider.GetRequiredService<EShopperAPIDbContext>();
                 if (!db.Database.EnsureCreated())
                     db.Database.Migrate();
