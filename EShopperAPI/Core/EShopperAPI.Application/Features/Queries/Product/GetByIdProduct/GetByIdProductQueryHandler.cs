@@ -17,9 +17,9 @@ namespace EShopperAPI.Application.Features.Queries.Product.GetByIdProduct
             EShopperAPI.Domain.Entities.Product product = await _productReadRepository.GetByIdAsync(request.Id, false);
             return new()
             {
-                Name = "test",
-                Price = 1453,
-                Stock = 1998
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock
             };
         }
     }
