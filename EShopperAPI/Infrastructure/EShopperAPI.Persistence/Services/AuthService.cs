@@ -80,6 +80,7 @@ namespace EShopperAPI.Persistence.Services
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
             if (result.Succeeded)
             {
+                await _signInManager.SignInAsync(user, false);
                 Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime, user);
                 await _userService.UpdateRefreshToken(token.RefreshToken, user, token.ExpirationDate, 1500);
                 return token;

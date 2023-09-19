@@ -106,8 +106,22 @@ internal class Program
         app.UseCors();
         //app.UseHttpsRedirection();
 
+        
+
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.Use(async (context, next) =>
+        {
+            await next();
+
+            try
+            {
+                var authorizationHeader = context.Request.Headers["Authorization"].FirstOrDefault();
+                var x = context.User.Identity.IsAuthenticated;
+            }
+            catch { }
+        });
 
         app.Use(async (context, next) =>
         {
