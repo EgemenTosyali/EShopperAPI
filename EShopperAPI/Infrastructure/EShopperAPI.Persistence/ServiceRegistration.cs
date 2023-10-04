@@ -5,6 +5,7 @@ using EShopperAPI.Domain.Entities.Identities;
 using EShopperAPI.Persistence.Contexts;
 using EShopperAPI.Persistence.Repositories;
 using EShopperAPI.Persistence.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
@@ -23,7 +24,8 @@ namespace EShopperAPI.Persistence
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
 
-            }).AddEntityFrameworkStores<EShopperAPIDbContext>();
+            }).AddEntityFrameworkStores<EShopperAPIDbContext>()
+              .AddDefaultTokenProviders();
 
             service.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             service.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
@@ -43,6 +45,8 @@ namespace EShopperAPI.Persistence
             service.AddScoped<IAuthService, AuthService>();
             service.AddScoped<IInternalAuthentication, AuthService>();
             service.AddScoped<IExternalAuthentication, AuthService>();
+
+            service.AddScoped<IRoleService, RoleService>();
         }
     }
 }
