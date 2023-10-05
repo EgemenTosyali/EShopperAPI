@@ -8,7 +8,7 @@ namespace EShopperAPI.Application.Abstractions.Services
 {
     public interface IRoleService
     {
-        object GetAllRoles(int page, int size);
+        (object, int) GetAllRoles(int page, int size);
         Task<(string id, string name)> GetRoleById(string id);
         Task<bool> CreateRole(string name);
         Task<bool> DeleteRole(string name);

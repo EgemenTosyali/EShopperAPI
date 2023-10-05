@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.Application.Abstractions.Services;
+using EShopperAPI.Application.DTOs.Roles;
 using EShopperAPI.Domain.Entities.Identities;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -20,7 +21,7 @@ namespace EShopperAPI.Persistence.Services
 
         public async Task<bool> CreateRole(string name)
         {
-            IdentityResult result = await _roleManager?.CreateAsync(new() {  Id = Guid.NewGuid().ToString() ,Name = name });
+            IdentityResult result = await _roleManager?.CreateAsync(new() { Id = Guid.NewGuid().ToString(), Name = name });
             return result.Succeeded;
         }
 
@@ -30,9 +31,17 @@ namespace EShopperAPI.Persistence.Services
             return result.Succeeded;
         }
 
-        public object GetAllRoles(int page, int size)
+        public (object, int) GetAllRoles(int page, int size)
         {
-            return _roleManager.Roles.Skip(page * size).Take(size).Select(r => new {r.Id, r.Name});
+            var query = _roleManager.Roles;
+            IQueryable<AppRole> rolesQuery = null;
+
+            if (page != -1 && size != -1)
+                rolesQuery = query.Skip(page * size).Take(size);
+            else
+                rolesQuery = query;
+
+            return (rolesQuery.Select(r => new { r.Id, r.Name }), query.Count());
         }
 
         public async Task<(string id, string name)> GetRoleById(string id)

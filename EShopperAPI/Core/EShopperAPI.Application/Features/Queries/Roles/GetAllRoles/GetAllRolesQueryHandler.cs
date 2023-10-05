@@ -1,4 +1,5 @@
 ﻿using EShopperAPI.Application.Abstractions.Services;
+using EShopperAPI.Application.DTOs.Roles;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,12 @@ namespace EShopperAPI.Application.Features.Queries.Roles.GetAllRoles
 
         public async Task<GetAllRolesQueryResponse> Handle(GetAllRolesQueryRequest request, CancellationToken cancellationToken)
         {
-            var result = roleService.GetAllRoles(request.Page,request.Size);
-            return new GetAllRolesQueryResponse()
+            var (datas, count) = roleService.GetAllRoles(request.Page, request.Size);
+
+            return new()
             {
-                Roles = result
+                Roles = datas,
+                totalRoleCount = count
             };
         }
     }
