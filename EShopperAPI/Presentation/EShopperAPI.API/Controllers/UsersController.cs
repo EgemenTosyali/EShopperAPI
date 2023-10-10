@@ -10,7 +10,6 @@ namespace EShopperAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Admin")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
